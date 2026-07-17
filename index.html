@@ -21,7 +21,7 @@
 
         /* Seitliche Navigationsleiste mit den Modellen */
         #sidebar {
-            width: 320px;
+            width: 340px;
             background-color: #141418;
             border-right: 1px solid #2a2a32;
             display: flex;
@@ -37,28 +37,77 @@
             border-bottom: 1px solid #2a2a32;
             background-color: #0f0f12;
             text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        /* Container für die Gitter-Kategorien */
+        .navigation-content {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 15px;
+        }
+
+        /* Kategorie-Boxen (hdp, kfz, krz) */
+        .gitter-section {
+            background-color: #1e1e24;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2a32;
+            overflow: hidden;
+        }
+
+        .gitter-header {
+            background-color: #2a2a36;
+            padding: 12px 15px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-bottom: 1px solid #141418;
+            color: #3b82f6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .model-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            overflow-y: auto;
-            flex-grow: 1;
         }
 
+        /* Einzelne Menüpunkte */
         .model-item {
-            padding: 15px 20px;
+            padding: 12px 15px;
             cursor: pointer;
-            border-bottom: 1px solid #1e1e24;
+            border-bottom: 1px solid #141418;
             transition: background 0.2s, color 0.2s;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
+            color: #d1d5db;
+        }
+
+        .model-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Eingerückte Varianten (Erweitert / Offen) */
+        .model-item.sub-item {
+            padding-left: 30px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            position: relative;
+        }
+
+        /* Kleiner visueller Zweig-Effekt für Unterpunkte */
+        .model-item.sub-item::before {
+            content: "↳";
+            position: absolute;
+            left: 15px;
+            color: #4b5563;
         }
 
         .model-item:hover {
             background-color: #2a2a32;
+            color: #ffffff;
         }
 
         .model-item.active {
@@ -85,7 +134,7 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             padding: 12px 24px;
             border-radius: 8px;
             pointer-events: none;
@@ -102,10 +151,10 @@
             }
             #sidebar {
                 width: 100%;
-                height: 40%;
+                height: 45%;
             }
             #viewer-container {
-                height: 60%;
+                height: 55%;
             }
         }
     </style>
@@ -114,29 +163,51 @@
 </head>
 <body>
 
-    <!-- Linke Menüleiste mit verständlichen Namen -->
+    <!-- Linke Menüleiste mit strukturierter Aufteilung -->
     <div id="sidebar">
         <h2>Kristallgitter-Lücken</h2>
-        <ul class="model-list">
-            <!-- data-file verweist auf die echte Datei, der Text dazwischen ist das, was der Nutzer sieht -->
-            <li class="model-item active" data-file="Hdp_OL.glb">Hdp - Oktaederlücke</li>
-            <li class="model-item" data-file="Hdp_OL_erweitert.glb">Hdp - Oktaederlücke (erweitert)</li>
-            <li class="model-item" data-file="Hdp_TL.glb">Hdp - Tetraederlücke</li>
-            <li class="model-item" data-file="Hdp_TL_erweitert.glb">Hdp - Tetraederlücke (erweitert)</li>
-            <li class="model-item" data-file="kfz_OL_open_ppt.glb">kfz - Oktaederlücke (offen)</li>
-            <li class="model-item" data-file="kfz_OL_ppt.glb">kfz - Oktaederlücke </li>
-            <li class="model-item" data-file="kfz_TL.glb">kfz - Tetraederlücke</li>
-            <li class="model-item" data-file="kfz_TL_open.glb">kfz - Tetraederlücke (offen)</li>
-            <li class="model-item" data-file="krz_OL.glb">krz - Oktaederlücke</li>
-            <li class="model-item" data-file="krz_OL_erweitert.glb">krz - Oktaederlücke (erweitert)</li>
-            <li class="model-item" data-file="krz_TL.glb">krz - Tetraederlücke</li>
-            <li class="model-item" data-file="krz_TL_erweitert.glb">krz - Tetraederlücke (erweitert)</li>
-        </ul>
+        
+        <div class="navigation-content">
+            
+            <!-- SEKTION 1: HDP -->
+            <div class="gitter-section">
+                <div class="gitter-header">Hexagonal (hdp)</div>
+                <ul class="model-list">
+                    <li class="model-item active" data-file="Hdp_OL.glb">Oktaederlücke (OL)</li>
+                    <li class="model-item sub-item" data-file="Hdp_OL_erweitert.glb">OL erweitert</li>
+                    <li class="model-item" data-file="Hdp_TL.glb">Tetraederlücke (TL)</li>
+                    <li class="model-item sub-item" data-file="Hdp_TL_erweitert.glb">TL erweitert</li>
+                </ul>
+            </div>
+
+            <!-- SEKTION 2: KFZ -->
+            <div class="gitter-section">
+                <div class="gitter-header">Kopfzentriert (kfz)</div>
+                <ul class="model-list">
+                    <li class="model-item" data-file="kfz_OL_ppt.glb">Oktaederlücke (OL)</li>
+                    <li class="model-item sub-item" data-file="kfz_OL_open_ppt.glb">OL geöffnet</li>
+                    <li class="model-item" data-file="kfz_TL.glb">Tetraederlücke (TL)</li>
+                    <li class="model-item sub-item" data-file="kfz_TL_open.glb">TL geöffnet</li>
+                </ul>
+            </div>
+
+            <!-- SEKTION 3: KRZ -->
+            <div class="gitter-section">
+                <div class="gitter-header">Raumzentriert (krz)</div>
+                <ul class="model-list">
+                    <li class="model-item" data-file="krz_OL.glb">Oktaederlücke (OL)</li>
+                    <li class="model-item sub-item" data-file="krz_OL_erweitert.glb">OL erweitert</li>
+                    <li class="model-item" data-file="krz_TL.glb">Tetraederlücke (TL)</li>
+                    <li class="model-item sub-item" data-file="krz_TL_erweitert.glb">TL erweitert</li>
+                </ul>
+            </div>
+
+        </div>
     </div>
 
     <!-- Rechter Hauptbereich für den 3D-Viewer -->
     <div id="viewer-container">
-        <div id="model-title-overlay">Hdp - Oktaederlücke</div>
+        <div id="model-title-overlay">hdp - Oktaederlücke (OL)</div>
         
         <!-- Startet standardmäßig mit dem ersten Modell -->
         <model-viewer 
@@ -168,8 +239,12 @@
                 const modelFile = item.getAttribute('data-file');
                 viewer.setAttribute('src', modelFile);
 
-                // Den angezeigten Namen im Overlay aktualisieren
-                titleOverlay.textContent = item.textContent;
+                // Den angezeigten Namen im Overlay zusammensetzen (z.B. "kfz - Oktaederlücke")
+                const sectionHeader = item.closest('.gitter-section').querySelector('.gitter-header').textContent;
+                const shortGitter = sectionHeader.split(' ')[1] || sectionHeader; // Holt das geklammerte (kfz) etc.
+                const cleanGitter = shortGitter.replace(/[\(\)]/g, ''); // Klammern entfernen
+                
+                titleOverlay.textContent = `${cleanGitter} - ${item.textContent.replace('↳ ', '')}`;
             });
         });
     </script>
